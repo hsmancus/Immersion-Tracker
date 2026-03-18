@@ -11,16 +11,14 @@
     --surface: #151820;
     --surface2: #1c2030;
     --border: #252a38;
-    --accent: #4ade80;
+    --hagen: #4ade80;
+    --hannah: #f472b6;
     --accent2: #22d3ee;
     --accent3: #f59e0b;
     --red: #f87171;
     --text: #e8eaf0;
     --muted: #6b7280;
     --heat0: #1c2030;
-    --heat1: #14532d;
-    --heat2: #16a34a;
-    --heat3: #4ade80;
     --font: 'Noto Serif JP', serif;
     --mono: 'DM Mono', monospace;
   }
@@ -35,54 +33,55 @@
     padding: 0 0 60px 0;
   }
 
-  /* HEADER */
   .header {
-    padding: 28px 24px 20px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding: 20px 20px 0;
     position: sticky;
     top: 0;
     background: var(--bg);
     z-index: 100;
+    border-bottom: 1px solid var(--border);
   }
 
-  .header-title {
-    font-size: 18px;
-    font-weight: 800;
-    letter-spacing: -0.5px;
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
   }
 
-  .header-title span {
-    color: var(--accent);
-  }
+  .header-title { font-size: 17px; font-weight: 900; letter-spacing: -0.5px; }
+  .header-title .h { color: var(--hagen); }
+  .header-title .ha { color: var(--hannah); }
 
   .refresh-btn {
     background: var(--surface2);
     border: 1px solid var(--border);
     color: var(--text);
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 10px;
     padding: 6px 12px;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.2s;
-    letter-spacing: 0.5px;
   }
+  .refresh-btn:hover { border-color: var(--hagen); color: var(--hagen); }
 
-  .refresh-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
+  .tabs { display: flex; }
+  .tab {
+    flex: 1; text-align: center;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 1px; padding: 10px 0;
+    cursor: pointer; color: var(--muted);
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s; text-transform: uppercase;
   }
+  .tab.active-hagen { color: var(--hagen); border-bottom-color: var(--hagen); }
+  .tab.active-hannah { color: var(--hannah); border-bottom-color: var(--hannah); }
+  .tab.active-vs { color: var(--accent2); border-bottom-color: var(--accent2); }
+  .tab:hover { color: var(--text); }
 
-  .container {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 0 16px;
-  }
+  .container { max-width: 680px; margin: 0 auto; padding: 0 16px; }
 
-  /* TODAY CARD */
   .today-card {
     margin: 20px 0 0;
     background: var(--surface);
@@ -92,412 +91,131 @@
     position: relative;
     overflow: hidden;
   }
-
   .today-card::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    top: 0; left: 0; right: 0; height: 2px;
   }
+  .hagen-card::before { background: linear-gradient(90deg, var(--hagen), var(--accent2)); }
+  .hannah-card::before { background: linear-gradient(90deg, var(--hannah), var(--accent3)); }
 
-  .today-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
+  .today-label { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+  .today-mins { font-size: 56px; font-weight: 900; line-height: 1; letter-spacing: -2px; margin-bottom: 4px; }
+  .today-mins .unit { font-size: 20px; font-weight: 400; color: var(--muted); letter-spacing: 0; }
+  .today-goal { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-bottom: 20px; }
 
-  .today-mins {
-    font-size: 56px;
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: -2px;
-    margin-bottom: 4px;
-  }
-
-  .today-mins .unit {
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--muted);
-    letter-spacing: 0;
-  }
-
-  .today-goal {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--muted);
-    margin-bottom: 20px;
-  }
-
-  .progress-track {
-    height: 8px;
-    background: var(--surface2);
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 8px;
-  }
-
-  .progress-fill {
-    height: 100%;
-    border-radius: 4px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-    width: 0%;
-  }
-
-  .progress-labels {
-    display: flex;
-    justify-content: space-between;
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted);
-  }
+  .progress-track { height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
+  .progress-fill { height: 100%; border-radius: 4px; transition: width 1s cubic-bezier(0.4,0,0.2,1); }
+  .progress-labels { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 10px; color: var(--muted); }
 
   .goal-met {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(74, 222, 128, 0.1);
-    border: 1px solid rgba(74, 222, 128, 0.3);
-    color: var(--accent);
-    font-family: var(--mono);
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 20px;
-    margin-top: 12px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--mono); font-size: 11px;
+    padding: 4px 10px; border-radius: 20px; margin-top: 12px;
   }
+  .goal-met-hagen { background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.3); color: var(--hagen); }
+  .goal-met-hannah { background: rgba(244,114,182,0.1); border: 1px solid rgba(244,114,182,0.3); color: var(--hannah); }
 
-  /* STATS ROW */
-  .stats-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
-    margin: 12px 0 0;
-  }
+  .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 12px 0 0; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 14px; }
+  .stat-label { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+  .stat-value { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; line-height: 1; }
+  .stat-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 4px; }
 
-  .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px 14px;
-  }
-
-  .stat-label {
-    font-family: var(--mono);
-    font-size: 9px;
-    color: var(--muted);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-
-  .stat-value {
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    line-height: 1;
-  }
-
-  .stat-sub {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-
-  .streak-val { color: var(--accent3); }
-  .week-val { color: var(--accent2); }
-  .total-val { color: var(--accent); }
-
-  /* SECTION HEADER */
   .section-header {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    font-family: var(--mono); font-size: 10px; color: var(--muted);
+    letter-spacing: 2px; text-transform: uppercase;
     margin: 28px 0 12px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: flex; align-items: center; gap: 10px;
   }
+  .section-header::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-  .section-header::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
+  .week-bars { display: grid; grid-template-columns: repeat(7,1fr); gap: 6px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
+  .day-bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .day-bar-track { width: 100%; height: 80px; background: var(--surface2); border-radius: 4px; overflow: hidden; display: flex; align-items: flex-end; }
+  .day-bar-fill { width: 100%; border-radius: 4px; transition: height 0.8s cubic-bezier(0.4,0,0.2,1); height: 0%; }
+  .day-label { font-family: var(--mono); font-size: 9px; color: var(--muted); text-align: center; }
+  .day-mins { font-family: var(--mono); font-size: 9px; color: var(--text); text-align: center; }
 
-  /* LAST 7 DAYS */
-  .week-bars {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 18px;
-  }
+  .heatmap-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px; overflow-x: auto; }
+  .heatmap-months { display: flex; margin-bottom: 4px; }
+  .month-label { font-family: var(--mono); font-size: 9px; color: var(--muted); flex-shrink: 0; }
+  .heatmap-grid { display: flex; gap: 3px; }
+  .heatmap-col { display: flex; flex-direction: column; gap: 3px; }
+  .heat-cell { width: 13px; height: 13px; border-radius: 2px; background: var(--heat0); flex-shrink: 0; cursor: default; transition: transform 0.1s; }
+  .heat-cell:hover { transform: scale(1.4); z-index: 10; position: relative; }
+  .heatmap-legend { display: flex; align-items: center; gap: 6px; margin-top: 12px; justify-content: flex-end; }
+  .legend-label { font-family: var(--mono); font-size: 9px; color: var(--muted); }
+  .legend-cell { width: 11px; height: 11px; border-radius: 2px; }
 
-  .day-bar-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .day-bar-track {
-    width: 100%;
-    height: 80px;
-    background: var(--surface2);
-    border-radius: 4px;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: flex-end;
-  }
-
-  .day-bar-fill {
-    width: 100%;
-    border-radius: 4px;
-    transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    height: 0%;
-  }
-
-  .bar-goal { background: var(--accent); }
-  .bar-partial { background: var(--accent3); }
-  .bar-low { background: var(--red); }
-  .bar-empty { background: transparent; }
-
-  .day-label {
-    font-family: var(--mono);
-    font-size: 9px;
-    color: var(--muted);
-    text-align: center;
-  }
-
-  .day-mins {
-    font-family: var(--mono);
-    font-size: 9px;
-    color: var(--text);
-    text-align: center;
-  }
-
-  /* HEAT MAP */
-  .heatmap-wrap {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 18px;
-    overflow-x: auto;
-  }
-
-  .heatmap-months {
-    display: flex;
-    margin-bottom: 4px;
-    padding-left: 0px;
-  }
-
-  .month-label {
-    font-family: var(--mono);
-    font-size: 9px;
-    color: var(--muted);
-    flex-shrink: 0;
-  }
-
-  .heatmap-grid {
-    display: flex;
-    gap: 3px;
-  }
-
-  .heatmap-col {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-
-  .heat-cell {
-    width: 13px;
-    height: 13px;
-    border-radius: 2px;
-    background: var(--heat0);
-    flex-shrink: 0;
-    position: relative;
-    cursor: default;
-    transition: transform 0.1s;
-  }
-
-  .heat-cell:hover {
-    transform: scale(1.4);
-    z-index: 10;
-  }
-
-  .heat-1 { background: var(--heat1); }
-  .heat-2 { background: var(--heat2); }
-  .heat-3 { background: var(--heat3); }
-
-  .heatmap-legend {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 12px;
-    justify-content: flex-end;
-  }
-
-  .legend-label {
-    font-family: var(--mono);
-    font-size: 9px;
-    color: var(--muted);
-  }
-
-  .legend-cell {
-    width: 11px;
-    height: 11px;
-    border-radius: 2px;
-  }
-
-  /* TYPE BREAKDOWN */
-  .breakdown-list {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    overflow: hidden;
-  }
-
-  .breakdown-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 13px 18px;
-    border-bottom: 1px solid var(--border);
-  }
-
+  .breakdown-list { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .breakdown-row { display: flex; align-items: center; gap: 12px; padding: 13px 18px; border-bottom: 1px solid var(--border); }
   .breakdown-row:last-child { border-bottom: none; }
+  .breakdown-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .breakdown-name { flex: 1; font-size: 13px; font-weight: 600; }
+  .breakdown-bar-wrap { width: 80px; height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+  .breakdown-bar-fill { height: 100%; border-radius: 2px; }
+  .breakdown-mins { font-family: var(--mono); font-size: 11px; color: var(--muted); width: 52px; text-align: right; }
+  .breakdown-pct { font-family: var(--mono); font-size: 11px; color: var(--muted); width: 32px; text-align: right; }
 
-  .breakdown-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
+  /* VS */
+  .vs-header {
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center; gap: 12px;
+    margin: 20px 0 0;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 20px;
   }
+  .vs-player { text-align: center; }
+  .vs-name { font-size: 13px; font-weight: 700; font-family: var(--mono); letter-spacing: 1px; margin-bottom: 6px; }
+  .vs-big { font-size: 42px; font-weight: 900; letter-spacing: -1px; line-height: 1; }
+  .vs-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 4px; }
+  .vs-divider { font-size: 18px; color: var(--muted); font-family: var(--mono); text-align: center; }
 
-  .breakdown-name {
-    flex: 1;
-    font-size: 13px;
-    font-weight: 600;
-  }
+  .vs-row { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-top: 10px; }
+  .vs-stat-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--border); gap: 10px; }
+  .vs-stat-row:last-child { border-bottom: none; }
+  .vs-val-h { font-size: 16px; font-weight: 700; font-family: var(--mono); text-align: left; }
+  .vs-val-ha { font-size: 16px; font-weight: 700; font-family: var(--mono); text-align: right; }
+  .vs-stat-label { font-family: var(--mono); font-size: 9px; color: var(--muted); text-align: center; letter-spacing: 1px; text-transform: uppercase; }
 
-  .breakdown-bar-wrap {
-    width: 80px;
-    height: 4px;
-    background: var(--surface2);
-    border-radius: 2px;
-    overflow: hidden;
-  }
+  .vs-week-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px; margin-top: 10px; }
+  .vs-week-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
+  .vs-day-col { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .vs-day-cell { width: 100%; aspect-ratio: 1; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 8px; font-weight: 500; }
+  .vs-day-label { font-family: var(--mono); font-size: 8px; color: var(--muted); text-align: center; }
 
-  .breakdown-bar-fill {
-    height: 100%;
-    border-radius: 2px;
-  }
-
-  .breakdown-mins {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    width: 52px;
-    text-align: right;
-  }
-
-  .breakdown-pct {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    width: 32px;
-    text-align: right;
-  }
-
-  /* LOADING */
-  .loading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 80px 20px;
-    gap: 16px;
-  }
-
-  .loading-text {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 2px;
-  }
-
-  .spinner {
-    width: 32px;
-    height: 32px;
-    border: 2px solid var(--border);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-
+  .loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; gap: 16px; }
+  .loading-text { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: 2px; }
+  .spinner { width: 32px; height: 32px; border: 2px solid var(--border); border-top-color: var(--hagen); border-radius: 50%; animation: spin 0.8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* TOOLTIP */
-  .tooltip {
-    position: fixed;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: 10px;
-    padding: 5px 8px;
-    border-radius: 5px;
-    pointer-events: none;
-    z-index: 1000;
-    white-space: nowrap;
-    display: none;
-  }
+  .tooltip { position: fixed; background: var(--surface2); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 10px; padding: 5px 8px; border-radius: 5px; pointer-events: none; z-index: 1000; white-space: nowrap; display: none; }
 
-  .error-msg {
-    background: rgba(248, 113, 113, 0.1);
-    border: 1px solid rgba(248, 113, 113, 0.3);
-    color: var(--red);
-    font-family: var(--mono);
-    font-size: 12px;
-    padding: 16px;
-    border-radius: 10px;
-    margin: 20px 0;
-    text-align: center;
-  }
-
-  /* fade in animation */
-  .fade-in {
-    animation: fadeIn 0.4s ease forwards;
-    opacity: 0;
-  }
-
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
-
-  .fade-in:nth-child(1) { animation-delay: 0.05s; }
-  .fade-in:nth-child(2) { animation-delay: 0.1s; }
-  .fade-in:nth-child(3) { animation-delay: 0.15s; }
-  .fade-in:nth-child(4) { animation-delay: 0.2s; }
-  .fade-in:nth-child(5) { animation-delay: 0.25s; }
+  .fade-in { animation: fadeIn 0.35s ease forwards; opacity: 0; }
+  .fade-in:nth-child(1){animation-delay:0.04s}
+  .fade-in:nth-child(2){animation-delay:0.08s}
+  .fade-in:nth-child(3){animation-delay:0.12s}
+  .fade-in:nth-child(4){animation-delay:0.16s}
+  .fade-in:nth-child(5){animation-delay:0.20s}
+  .fade-in:nth-child(6){animation-delay:0.24s}
+  @keyframes fadeIn { to { opacity: 1; } }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="header-title">日本語 <span>Tracker</span></div>
-  <button class="refresh-btn" onclick="loadData()">↻ REFRESH</button>
+  <div class="header-top">
+    <div class="header-title">
+      <span class="h">H</span>agen <span style="color:var(--muted)">×</span> <span class="ha">H</span>annah
+    </div>
+    <button class="refresh-btn" onclick="loadAll()">↻ REFRESH</button>
+  </div>
+  <div class="tabs">
+    <div class="tab active-hagen" onclick="setTab('hagen')" id="tab-hagen">Hagen</div>
+    <div class="tab" onclick="setTab('vs')" id="tab-vs">VS</div>
+    <div class="tab" onclick="setTab('hannah')" id="tab-hannah">Hannah</div>
+  </div>
 </div>
 
 <div class="container" id="app">
@@ -510,318 +228,346 @@
 <div class="tooltip" id="tooltip"></div>
 
 <script>
-const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQjqy00VBrYnNZozavX5B7QnSTJWFgIbCYICDGeU8ZqzVaPdi3zIpzcN1drMBDvf2yDeZJz13Ud38-H/pub?gid=1027126029&single=true&output=csv";
+const HAGEN_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQjqy00VBrYnNZozavX5B7QnSTJWFgIbCYICDGeU8ZqzVaPdi3zIpzcN1drMBDvf2yDeZJz13Ud38-H/pub?gid=1027126029&single=true&output=csv";
+const HANNAH_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTe6XAhe9h1xGk51SgcTFBBbUeN9JTX5l_8KQzbDSgE4H9YbOTNF3ZVJJ3TeQby1V9FdVBrVpNt7Xz2/pub?gid=378946601&single=true&output=csv";
 const DAILY_GOAL = 60;
 const TYPE_COLORS = ["#4ade80","#22d3ee","#f59e0b","#a78bfa","#f87171","#fb923c","#34d399"];
+
+let currentTab = "hagen";
+let hagenData = {}, hannahData = {};
 
 function parseCSV(text) {
   const lines = text.trim().split("\n");
   if (lines.length < 2) return [];
   const headers = lines[0].split(",").map(h => h.trim().replace(/"/g,""));
   return lines.slice(1).map(line => {
-    const cols = line.match(/(".*?"|[^,]+)(?=,|$)/g) || [];
+    const cols = line.match(/(".*?"|[^,\n]+)/g) || [];
     const obj = {};
-    headers.forEach((h, i) => {
-      obj[h] = (cols[i] || "").replace(/"/g,"").trim();
-    });
+    headers.forEach((h,i) => { obj[h] = (cols[i]||"").replace(/"/g,"").trim(); });
     return obj;
   });
 }
 
-function formatDateKey(dateStr) {
-  if (!dateStr) return null;
-  // Handle M/D/YYYY format from Google Forms
-  const parts = dateStr.split("/");
-  if (parts.length === 3) {
-    const m = parts[0].padStart(2,"0");
-    const d = parts[1].padStart(2,"0");
-    const y = parts[2].length === 2 ? "20" + parts[2] : parts[2];
-    return `${y}-${m}-${d}`;
+function formatDateKey(s) {
+  if (!s) return null;
+  const p = s.split("/");
+  if (p.length === 3) {
+    const y = p[2].length === 2 ? "20"+p[2] : p[2];
+    return `${y}-${p[0].padStart(2,"0")}-${p[1].padStart(2,"0")}`;
   }
-  // Handle YYYY-MM-DD
-  if (dateStr.includes("-")) return dateStr.substring(0,10);
+  if (s.includes("-")) return s.substring(0,10);
   return null;
 }
 
 function getTodayJST() {
-  const now = new Date();
-  const jst = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Tokyo" }));
-  const y = jst.getFullYear();
-  const m = String(jst.getMonth()+1).padStart(2,"0");
-  const d = String(jst.getDate()).padStart(2,"0");
-  return `${y}-${m}-${d}`;
+  const jst = new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Tokyo"}));
+  return `${jst.getFullYear()}-${String(jst.getMonth()+1).padStart(2,"0")}-${String(jst.getDate()).padStart(2,"0")}`;
 }
 
-function addDays(dateStr, n) {
-  const d = new Date(dateStr + "T00:00:00");
-  d.setDate(d.getDate() + n);
-  const y = d.getFullYear();
-  const m = String(d.getMonth()+1).padStart(2,"0");
-  const day = String(d.getDate()).padStart(2,"0");
-  return `${y}-${m}-${day}`;
+function addDays(s, n) {
+  const d = new Date(s+"T00:00:00");
+  d.setDate(d.getDate()+n);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
 }
 
 function buildData(rows) {
   const data = {};
-  rows.forEach(row => {
-    const dateStr = formatDateKey(row["Date"] || row["date"]);
-    const inputType = row["Input Type"] || row["input type"] || "";
-    const minutes = parseFloat(row["Minutes"] || row["minutes"]) || 0;
-    if (!dateStr || !inputType || minutes <= 0) return;
-    if (!data[dateStr]) data[dateStr] = { total: 0, byType: {} };
-    data[dateStr].total += minutes;
-    data[dateStr].byType[inputType] = (data[dateStr].byType[inputType] || 0) + minutes;
+  rows.forEach(r => {
+    const ds = formatDateKey(r["Date"]||r["date"]);
+    const type = r["Input Type"]||r["input type"]||"";
+    const mins = parseFloat(r["Minutes"]||r["minutes"])||0;
+    if (!ds||!type||mins<=0) return;
+    if (!data[ds]) data[ds]={total:0,byType:{}};
+    data[ds].total += mins;
+    data[ds].byType[type] = (data[ds].byType[type]||0)+mins;
   });
   return data;
 }
 
-function calcStreak(data, todayStr) {
-  let streak = 0;
-  let check = todayStr;
-  if (!data[check] || data[check].total < DAILY_GOAL) {
-    check = addDays(todayStr, -1);
-  }
-  while (data[check] && data[check].total >= DAILY_GOAL) {
-    streak++;
-    check = addDays(check, -1);
-  }
+function calcStreak(data, today) {
+  let streak=0, check=today;
+  if (!data[check]||data[check].total<DAILY_GOAL) check=addDays(today,-1);
+  while (data[check]&&data[check].total>=DAILY_GOAL){streak++;check=addDays(check,-1);}
   return streak;
 }
 
-function render(data) {
-  const todayStr = getTodayJST();
-  const todayMins = data[todayStr] ? data[todayStr].total : 0;
-  const pct = Math.min(Math.round((todayMins / DAILY_GOAL) * 100), 100);
-  const remaining = Math.max(DAILY_GOAL - todayMins, 0);
-  const goalMet = todayMins >= DAILY_GOAL;
-  const streak = calcStreak(data, todayStr);
-
-  // Totals
-  let totalMins = 0, weekMins = 0;
-  const weekAgo = addDays(todayStr, -6);
-  Object.entries(data).forEach(([date, val]) => {
-    totalMins += val.total;
-    if (date >= weekAgo && date <= todayStr) weekMins += val.total;
+function calcTotals(data, today) {
+  let total=0, week=0, month=0;
+  const w=addDays(today,-6), m=today.substring(0,7)+"-01";
+  Object.entries(data).forEach(([d,v])=>{
+    total+=v.total;
+    if(d>=w&&d<=today) week+=v.total;
+    if(d>=m&&d<=today) month+=v.total;
   });
+  return {total,week,month};
+}
 
-  const app = document.getElementById("app");
-  app.innerHTML = `
-    <!-- TODAY -->
-    <div class="today-card fade-in">
-      <div class="today-label">TODAY · ${todayStr}</div>
-      <div class="today-mins" style="color:${goalMet ? 'var(--accent)' : 'var(--text)'}">
+function setTab(tab) {
+  currentTab = tab;
+  document.getElementById("tab-hagen").className = "tab"+(tab==="hagen"?" active-hagen":"");
+  document.getElementById("tab-vs").className = "tab"+(tab==="vs"?" active-vs":"");
+  document.getElementById("tab-hannah").className = "tab"+(tab==="hannah"?" active-hannah":"");
+  renderCurrent();
+}
+
+function renderCurrent() {
+  if (currentTab==="hagen") renderPlayer(hagenData,"Hagen","hagen");
+  else if (currentTab==="hannah") renderPlayer(hannahData,"Hannah","hannah");
+  else renderVS();
+}
+
+function renderPlayer(data, name, who) {
+  const today = getTodayJST();
+  const todayMins = data[today]?data[today].total:0;
+  const pct = Math.min(Math.round((todayMins/DAILY_GOAL)*100),100);
+  const remaining = Math.max(DAILY_GOAL-todayMins,0);
+  const goalMet = todayMins>=DAILY_GOAL;
+  const streak = calcStreak(data,today);
+  const {total,week} = calcTotals(data,today);
+  const color = who==="hagen"?"var(--hagen)":"var(--hannah)";
+  const gradEnd = who==="hagen"?"var(--accent2)":"var(--accent3)";
+  const gmClass = who==="hagen"?"goal-met-hagen":"goal-met-hannah";
+
+  document.getElementById("app").innerHTML = `
+    <div class="today-card ${who}-card fade-in">
+      <div class="today-label">TODAY · ${today}</div>
+      <div class="today-mins" style="color:${goalMet?color:'var(--text)'}">
         ${todayMins}<span class="unit"> min</span>
       </div>
-      <div class="today-goal">goal: ${DAILY_GOAL} min${goalMet ? '' : ` · ${remaining} min to go`}</div>
+      <div class="today-goal">goal: ${DAILY_GOAL} min${goalMet?'':' · '+remaining+' min to go'}</div>
       <div class="progress-track">
-        <div class="progress-fill" id="prog-fill" style="width:${pct}%"></div>
+        <div class="progress-fill" style="width:${pct}%;background:linear-gradient(90deg,${color},${gradEnd})"></div>
       </div>
-      <div class="progress-labels">
-        <span>0</span><span>${DAILY_GOAL / 2}</span><span>${DAILY_GOAL} min</span>
-      </div>
-      ${goalMet ? '<div class="goal-met">✦ Goal complete</div>' : ''}
+      <div class="progress-labels"><span>0</span><span>30</span><span>60 min</span></div>
+      ${goalMet?`<div class="goal-met ${gmClass}">✦ Goal complete</div>`:''}
     </div>
-
-    <!-- STATS -->
     <div class="stats-row fade-in">
       <div class="stat-card">
         <div class="stat-label">Streak</div>
-        <div class="stat-value streak-val">${streak}</div>
-        <div class="stat-sub">${streak === 1 ? 'day' : 'days'} 🔥</div>
+        <div class="stat-value" style="color:var(--accent3)">${streak}</div>
+        <div class="stat-sub">${streak===1?'day':'days'} 🔥</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">This Week</div>
-        <div class="stat-value week-val">${(weekMins/60).toFixed(1)}</div>
+        <div class="stat-value" style="color:var(--accent2)">${(week/60).toFixed(1)}</div>
         <div class="stat-sub">hours</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">All Time</div>
-        <div class="stat-value total-val">${(totalMins/60).toFixed(1)}</div>
+        <div class="stat-value" style="color:${color}">${(total/60).toFixed(1)}</div>
         <div class="stat-sub">hours</div>
       </div>
     </div>
-
-    <!-- LAST 7 DAYS -->
     <div class="section-header fade-in">Last 7 Days</div>
-    ${renderWeekBars(data, todayStr)}
-
-    <!-- HEAT MAP -->
+    ${renderWeekBars(data,today,color)}
     <div class="section-header fade-in">12-Week Heat Map</div>
-    ${renderHeatMap(data, todayStr)}
-
-    <!-- BREAKDOWN -->
+    ${renderHeatMap(data,today,who)}
     <div class="section-header fade-in">By Input Type</div>
     ${renderBreakdown(data)}
   `;
 }
 
-function renderWeekBars(data, todayStr) {
-  const days = [];
-  for (let i = 6; i >= 0; i--) days.push(addDays(todayStr, -i));
-  const maxMins = Math.max(...days.map(d => data[d] ? data[d].total : 0), DAILY_GOAL);
+function renderVS() {
+  const today = getTodayJST();
+  const hToday = hagenData[today]?hagenData[today].total:0;
+  const haToday = hannahData[today]?hannahData[today].total:0;
+  const hStreak = calcStreak(hagenData,today);
+  const haStreak = calcStreak(hannahData,today);
+  const hT = calcTotals(hagenData,today);
+  const haT = calcTotals(hannahData,today);
 
-  const bars = days.map(d => {
-    const mins = data[d] ? data[d].total : 0;
-    const heightPct = maxMins > 0 ? Math.round((mins / maxMins) * 100) : 0;
-    const date = new Date(d + "T00:00:00");
-    const label = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][date.getDay()];
-    const cls = mins >= DAILY_GOAL ? "bar-goal" : mins >= 30 ? "bar-partial" : mins > 0 ? "bar-low" : "bar-empty";
+  function wc(a,b) { return a>b?"hagen":b>a?"hannah":"tie"; }
+  function hl(winner,side) {
+    const c = side==="hagen"?"var(--hagen)":"var(--hannah)";
+    return winner===side ? c : "var(--muted)";
+  }
+  function crown(winner,side) {
+    if(winner===side) return side==="hagen"?' <span style="color:var(--hagen)">👑</span>':' <span style="color:var(--hannah)">👑</span>';
+    return '';
+  }
+
+  const days = [];
+  for(let i=6;i>=0;i--) days.push(addDays(today,-i));
+
+  const vsWeek = days.map(d=>{
+    const hm=hagenData[d]?hagenData[d].total:0;
+    const ham=hannahData[d]?hannahData[d].total:0;
+    const date=new Date(d+"T00:00:00");
+    const lbl=["S","M","T","W","T","F","S"][date.getDay()];
+    const hBg=hm>=DAILY_GOAL?"rgba(74,222,128,0.3)":hm>0?"rgba(74,222,128,0.12)":"var(--surface2)";
+    const haBg=ham>=DAILY_GOAL?"rgba(244,114,182,0.3)":ham>0?"rgba(244,114,182,0.12)":"var(--surface2)";
     return `
-      <div class="day-bar-wrap">
-        <div class="day-bar-track">
-          <div class="day-bar-fill ${cls}" style="height:${heightPct}%"></div>
-        </div>
-        <div class="day-label">${label}</div>
-        <div class="day-mins">${mins > 0 ? mins+'m' : '—'}</div>
+      <div class="vs-day-col">
+        <div class="vs-day-cell" style="background:${hBg};color:${hm>0?'var(--hagen)':'var(--muted)'}">${hm>0?hm:'—'}</div>
+        <div class="vs-day-label">${lbl}</div>
+        <div class="vs-day-cell" style="background:${haBg};color:${ham>0?'var(--hannah)':'var(--muted)'}">${ham>0?ham:'—'}</div>
       </div>`;
   }).join("");
 
+  const tw=wc(hToday,haToday), sw=wc(hStreak,haStreak), ww=wc(hT.week,haT.week), aw=wc(hT.total,haT.total);
+
+  document.getElementById("app").innerHTML = `
+    <div class="vs-header fade-in">
+      <div class="vs-player">
+        <div class="vs-name" style="color:var(--hagen)">HAGEN</div>
+        <div class="vs-big" style="color:${hToday>=DAILY_GOAL?'var(--hagen)':'var(--text)'}">${hToday}</div>
+        <div class="vs-sub">min today</div>
+        ${hToday>=DAILY_GOAL?'<div style="font-family:var(--mono);font-size:10px;color:var(--hagen);margin-top:4px">✦ goal met</div>':''}
+      </div>
+      <div class="vs-divider">VS</div>
+      <div class="vs-player">
+        <div class="vs-name" style="color:var(--hannah)">HANNAH</div>
+        <div class="vs-big" style="color:${haToday>=DAILY_GOAL?'var(--hannah)':'var(--text)'}">${haToday}</div>
+        <div class="vs-sub">min today</div>
+        ${haToday>=DAILY_GOAL?'<div style="font-family:var(--mono);font-size:10px;color:var(--hannah);margin-top:4px">✦ goal met</div>':''}
+      </div>
+    </div>
+    <div class="vs-row fade-in">
+      <div class="vs-stat-row">
+        <div class="vs-val-h" style="color:${hl(sw,'hagen')}">${hStreak}d 🔥${crown(sw,'hagen')}</div>
+        <div class="vs-stat-label">Streak</div>
+        <div class="vs-val-ha" style="color:${hl(sw,'hannah')}">${crown(sw,'hannah')}🔥 ${haStreak}d</div>
+      </div>
+      <div class="vs-stat-row">
+        <div class="vs-val-h" style="color:${hl(ww,'hagen')}">${(hT.week/60).toFixed(1)}h${crown(ww,'hagen')}</div>
+        <div class="vs-stat-label">This Week</div>
+        <div class="vs-val-ha" style="color:${hl(ww,'hannah')}">${crown(ww,'hannah')}${(haT.week/60).toFixed(1)}h</div>
+      </div>
+      <div class="vs-stat-row">
+        <div class="vs-val-h" style="color:${hl(aw,'hagen')}">${(hT.total/60).toFixed(1)}h${crown(aw,'hagen')}</div>
+        <div class="vs-stat-label">All Time</div>
+        <div class="vs-val-ha" style="color:${hl(aw,'hannah')}">${crown(aw,'hannah')}${(haT.total/60).toFixed(1)}h</div>
+      </div>
+    </div>
+    <div class="section-header fade-in">Last 7 Days</div>
+    <div class="vs-week-wrap fade-in">
+      <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+        <span style="font-family:var(--mono);font-size:10px;color:var(--hagen)">▲ HAGEN</span>
+        <span style="font-family:var(--mono);font-size:10px;color:var(--hannah)">HANNAH ▲</span>
+      </div>
+      <div class="vs-week-grid">${vsWeek}</div>
+    </div>
+  `;
+}
+
+function renderWeekBars(data, today, color) {
+  const days = [];
+  for(let i=6;i>=0;i--) days.push(addDays(today,-i));
+  const maxMins = Math.max(...days.map(d=>data[d]?data[d].total:0),DAILY_GOAL);
+  const bars = days.map(d=>{
+    const mins=data[d]?data[d].total:0;
+    const h=maxMins>0?Math.round((mins/maxMins)*100):0;
+    const lbl=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][new Date(d+"T00:00:00").getDay()];
+    const bg=mins>=DAILY_GOAL?color:mins>=30?"var(--accent3)":mins>0?"var(--red)":"transparent";
+    return `<div class="day-bar-wrap">
+      <div class="day-bar-track"><div class="day-bar-fill" style="height:${h}%;background:${bg}"></div></div>
+      <div class="day-label">${lbl}</div>
+      <div class="day-mins">${mins>0?mins+'m':'—'}</div>
+    </div>`;
+  }).join("");
   return `<div class="week-bars fade-in">${bars}</div>`;
 }
 
-function renderHeatMap(data, todayStr) {
-  const weeks = 12;
-  const startDate = new Date(todayStr + "T00:00:00");
-  startDate.setDate(startDate.getDate() - (weeks * 7) + 1);
-  startDate.setDate(startDate.getDate() - startDate.getDay()); // snap to Sunday
-
-  const cols = [];
-  const monthLabels = [];
-  let current = new Date(startDate);
-  let lastMonth = -1;
-  let colIdx = 0;
-
-  while (true) {
-    const colDateStr = `${current.getFullYear()}-${String(current.getMonth()+1).padStart(2,"0")}-${String(current.getDate()).padStart(2,"0")}`;
-    if (colDateStr > todayStr) break;
-
-    // Month label
-    const mo = current.getMonth();
-    if (mo !== lastMonth) {
-      monthLabels.push({ col: colIdx, label: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][mo] });
-      lastMonth = mo;
-    }
-
-    const cells = [];
-    for (let dow = 0; dow < 7; dow++) {
-      const cellD = new Date(current);
-      cellD.setDate(cellD.getDate() + dow);
-      const ds = `${cellD.getFullYear()}-${String(cellD.getMonth()+1).padStart(2,"0")}-${String(cellD.getDate()).padStart(2,"0")}`;
-      const mins = data[ds] ? data[ds].total : 0;
-      const isFuture = ds > todayStr;
-      let cls = "heat-cell";
-      if (!isFuture) {
-        if (mins >= DAILY_GOAL) cls += " heat-3";
-        else if (mins >= 30) cls += " heat-2";
-        else if (mins > 0) cls += " heat-1";
-      }
-      const opacity = isFuture ? ' style="opacity:0.2"' : '';
-      cells.push(`<div class="${cls}"${opacity} data-date="${ds}" data-mins="${mins}"></div>`);
+function renderHeatMap(data, today, who) {
+  const c1=who==="hagen"?"#14532d":"#831843";
+  const c2=who==="hagen"?"#16a34a":"#be185d";
+  const c3=who==="hagen"?"#4ade80":"#f472b6";
+  const startDate=new Date(today+"T00:00:00");
+  startDate.setDate(startDate.getDate()-(12*7)+1);
+  startDate.setDate(startDate.getDate()-startDate.getDay());
+  const cols=[],monthLabels=[];
+  let current=new Date(startDate),lastMonth=-1,colIdx=0;
+  while(true){
+    const cs=`${current.getFullYear()}-${String(current.getMonth()+1).padStart(2,"0")}-${String(current.getDate()).padStart(2,"0")}`;
+    if(cs>today) break;
+    const mo=current.getMonth();
+    if(mo!==lastMonth){monthLabels.push({col:colIdx,label:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][mo]});lastMonth=mo;}
+    const cells=[];
+    for(let dow=0;dow<7;dow++){
+      const cd=new Date(current);
+      cd.setDate(cd.getDate()+dow);
+      const ds=`${cd.getFullYear()}-${String(cd.getMonth()+1).padStart(2,"0")}-${String(cd.getDate()).padStart(2,"0")}`;
+      const mins=data[ds]?data[ds].total:0;
+      const fut=ds>today;
+      let bg="var(--heat0)";
+      if(!fut){if(mins>=DAILY_GOAL)bg=c3;else if(mins>=30)bg=c2;else if(mins>0)bg=c1;}
+      const op=fut?' style="opacity:0.15"':'';
+      cells.push(`<div class="heat-cell"${op} style="background:${bg}" data-date="${ds}" data-mins="${mins}"></div>`);
     }
     cols.push(`<div class="heatmap-col">${cells.join("")}</div>`);
-
-    current.setDate(current.getDate() + 7);
+    current.setDate(current.getDate()+7);
     colIdx++;
   }
-
-  // Build month label row
-  const CELL = 13 + 3; // cell width + gap
-  let monthHTML = '';
-  for (let i = 0; i < monthLabels.length; i++) {
-    const left = monthLabels[i].col * CELL;
-    const nextLeft = i + 1 < monthLabels.length ? monthLabels[i+1].col * CELL : 9999;
-    const width = nextLeft - left;
-    monthHTML += `<div class="month-label" style="width:${Math.max(width,20)}px">${monthLabels[i].label}</div>`;
+  const CELL=16;
+  let mHTML='';
+  for(let i=0;i<monthLabels.length;i++){
+    const w=i+1<monthLabels.length?(monthLabels[i+1].col-monthLabels[i].col)*CELL:60;
+    mHTML+=`<div class="month-label" style="width:${Math.max(w,20)}px">${monthLabels[i].label}</div>`;
   }
-
-  return `
-    <div class="heatmap-wrap fade-in">
-      <div class="heatmap-months">${monthHTML}</div>
-      <div class="heatmap-grid" id="heatmap-grid">${cols.join("")}</div>
-      <div class="heatmap-legend">
-        <span class="legend-label">Less</span>
-        <div class="legend-cell" style="background:var(--heat0)"></div>
-        <div class="legend-cell" style="background:var(--heat1)"></div>
-        <div class="legend-cell" style="background:var(--heat2)"></div>
-        <div class="legend-cell" style="background:var(--heat3)"></div>
-        <span class="legend-label">More</span>
-      </div>
-    </div>`;
+  return `<div class="heatmap-wrap fade-in">
+    <div class="heatmap-months">${mHTML}</div>
+    <div class="heatmap-grid">${cols.join("")}</div>
+    <div class="heatmap-legend">
+      <span class="legend-label">Less</span>
+      <div class="legend-cell" style="background:var(--heat0)"></div>
+      <div class="legend-cell" style="background:${c1}"></div>
+      <div class="legend-cell" style="background:${c2}"></div>
+      <div class="legend-cell" style="background:${c3}"></div>
+      <span class="legend-label">More</span>
+    </div>
+  </div>`;
 }
 
 function renderBreakdown(data) {
-  const typeTotals = {};
-  Object.values(data).forEach(val => {
-    Object.entries(val.byType).forEach(([type, mins]) => {
-      typeTotals[type] = (typeTotals[type] || 0) + mins;
-    });
-  });
-
-  const totalMins = Object.values(typeTotals).reduce((a,b) => a+b, 0);
-  const sorted = Object.entries(typeTotals).sort((a,b) => b[1]-a[1]);
-
-  if (sorted.length === 0) {
-    return `<div class="breakdown-list fade-in"><div class="breakdown-row"><div class="breakdown-name" style="color:var(--muted)">No data yet</div></div></div>`;
-  }
-
-  const rows = sorted.map(([type, mins], i) => {
-    const pct = totalMins > 0 ? Math.round((mins / totalMins) * 100) : 0;
-    const color = TYPE_COLORS[i % TYPE_COLORS.length];
-    const hrs = mins >= 60 ? `${(mins/60).toFixed(1)}h` : `${mins}m`;
-    return `
-      <div class="breakdown-row">
-        <div class="breakdown-dot" style="background:${color}"></div>
-        <div class="breakdown-name">${type}</div>
-        <div class="breakdown-bar-wrap">
-          <div class="breakdown-bar-fill" style="width:${pct}%;background:${color}"></div>
-        </div>
-        <div class="breakdown-mins">${hrs}</div>
-        <div class="breakdown-pct">${pct}%</div>
-      </div>`;
+  const typeTotals={};
+  Object.values(data).forEach(v=>{Object.entries(v.byType).forEach(([t,m])=>{typeTotals[t]=(typeTotals[t]||0)+m;});});
+  const total=Object.values(typeTotals).reduce((a,b)=>a+b,0);
+  const sorted=Object.entries(typeTotals).sort((a,b)=>b[1]-a[1]);
+  if(!sorted.length) return `<div class="breakdown-list fade-in"><div class="breakdown-row"><div class="breakdown-name" style="color:var(--muted)">No data yet</div></div></div>`;
+  const rows=sorted.map(([type,mins],i)=>{
+    const pct=total>0?Math.round((mins/total)*100):0;
+    const color=TYPE_COLORS[i%TYPE_COLORS.length];
+    const hrs=mins>=60?`${(mins/60).toFixed(1)}h`:`${mins}m`;
+    return `<div class="breakdown-row">
+      <div class="breakdown-dot" style="background:${color}"></div>
+      <div class="breakdown-name">${type}</div>
+      <div class="breakdown-bar-wrap"><div class="breakdown-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+      <div class="breakdown-mins">${hrs}</div>
+      <div class="breakdown-pct">${pct}%</div>
+    </div>`;
   }).join("");
-
   return `<div class="breakdown-list fade-in">${rows}</div>`;
 }
 
-// Tooltip for heat map
-document.addEventListener("mousemove", e => {
-  const cell = e.target.closest(".heat-cell");
-  const tip = document.getElementById("tooltip");
-  if (cell && cell.dataset.date) {
-    const mins = parseInt(cell.dataset.mins) || 0;
-    tip.textContent = `${cell.dataset.date}: ${mins} min`;
-    tip.style.display = "block";
-    tip.style.left = (e.clientX + 12) + "px";
-    tip.style.top = (e.clientY - 28) + "px";
-  } else {
-    tip.style.display = "none";
-  }
+document.addEventListener("mousemove",e=>{
+  const cell=e.target.closest(".heat-cell");
+  const tip=document.getElementById("tooltip");
+  if(cell&&cell.dataset.date){
+    tip.textContent=`${cell.dataset.date}: ${parseInt(cell.dataset.mins)||0} min`;
+    tip.style.display="block";
+    tip.style.left=(e.clientX+12)+"px";
+    tip.style.top=(e.clientY-28)+"px";
+  } else { tip.style.display="none"; }
 });
 
-async function loadData() {
-  document.getElementById("app").innerHTML = `
-    <div class="loading">
-      <div class="spinner"></div>
-      <div class="loading-text">LOADING DATA...</div>
-    </div>`;
+async function fetchCSV(url) {
+  const res=await fetch(url+"&t="+Date.now());
+  if(!res.ok) throw new Error("Failed to fetch");
+  return buildData(parseCSV(await res.text()));
+}
 
+async function loadAll() {
+  document.getElementById("app").innerHTML=`<div class="loading"><div class="spinner"></div><div class="loading-text">LOADING DATA...</div></div>`;
   try {
-    const res = await fetch(CSV_URL + "&t=" + Date.now());
-    if (!res.ok) throw new Error("Failed to fetch");
-    const text = await res.text();
-    const rows = parseCSV(text);
-    const data = buildData(rows);
-    render(data);
-  } catch (err) {
-    document.getElementById("app").innerHTML = `
-      <div class="error-msg">
-        Could not load data. Make sure the sheet is published to web.<br><br>
-        <small>${err.message}</small>
-      </div>`;
+    const [h,ha]=await Promise.all([fetchCSV(HAGEN_URL),fetchCSV(HANNAH_URL)]);
+    hagenData=h; hannahData=ha;
+    renderCurrent();
+  } catch(err) {
+    document.getElementById("app").innerHTML=`<div style="background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);color:var(--red);font-family:var(--mono);font-size:12px;padding:16px;border-radius:10px;margin:20px 0;text-align:center">Could not load data.<br><small>${err.message}</small></div>`;
   }
 }
 
-loadData();
+loadAll();
 </script>
 </body>
 </html>
