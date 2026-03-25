@@ -230,7 +230,7 @@
 <script>
 const HAGEN_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQjqy00VBrYnNZozavX5B7QnSTJWFgIbCYICDGeU8ZqzVaPdi3zIpzcN1drMBDvf2yDeZJz13Ud38-H/pub?gid=1027126029&single=true&output=csv";
 const HANNAH_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTe6XAhe9h1xGk51SgcTFBBbUeN9JTX5l_8KQzbDSgE4H9YbOTNF3ZVJJ3TeQby1V9FdVBrVpNt7Xz2/pub?gid=378946601&single=true&output=csv";
-const DAILY_GOAL = 60;
+const DAILY_GOAL = 150;
 const TYPE_COLORS = ["#4ade80","#22d3ee","#f59e0b","#a78bfa","#f87171","#fb923c","#34d399"];
 
 let currentTab = "hagen";
@@ -338,7 +338,7 @@ function renderPlayer(data, name, who) {
       <div class="progress-track">
         <div class="progress-fill" style="width:${pct}%;background:linear-gradient(90deg,${color},${gradEnd})"></div>
       </div>
-      <div class="progress-labels"><span>0</span><span>30</span><span>60 min</span></div>
+      <div class="progress-labels"><span>0</span><span>75</span><span>150 min</span></div>
       ${goalMet?`<div class="goal-met ${gmClass}">✦ Goal complete</div>`:''}
     </div>
     <div class="stats-row fade-in">
