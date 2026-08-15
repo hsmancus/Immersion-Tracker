@@ -24,57 +24,18 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); min-height: 100vh; padding: 0 0 60px 0; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font);
-    min-height: 100vh;
-    padding: 0 0 60px 0;
-  }
-
-  .header {
-    padding: 20px 20px 0;
-    position: sticky;
-    top: 0;
-    background: var(--bg);
-    z-index: 100;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .header-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-  }
-
+  .header { padding: 20px 20px 0; position: sticky; top: 0; background: var(--bg); z-index: 100; border-bottom: 1px solid var(--border); }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
   .header-title { font-size: 17px; font-weight: 900; letter-spacing: -0.5px; }
   .header-title .h { color: var(--hagen); }
   .header-title .ha { color: var(--hannah); }
-
-  .refresh-btn {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: 10px;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
+  .refresh-btn { background: var(--surface2); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 10px; padding: 6px 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
   .refresh-btn:hover { border-color: var(--hagen); color: var(--hagen); }
 
   .tabs { display: flex; }
-  .tab {
-    flex: 1; text-align: center;
-    font-family: var(--mono); font-size: 11px;
-    letter-spacing: 1px; padding: 10px 0;
-    cursor: pointer; color: var(--muted);
-    border-bottom: 2px solid transparent;
-    transition: all 0.2s; text-transform: uppercase;
-  }
+  .tab { flex: 1; text-align: center; font-family: var(--mono); font-size: 11px; letter-spacing: 1px; padding: 10px 0; cursor: pointer; color: var(--muted); border-bottom: 2px solid transparent; transition: all 0.2s; text-transform: uppercase; }
   .tab.active-hagen { color: var(--hagen); border-bottom-color: var(--hagen); }
   .tab.active-hannah { color: var(--hannah); border-bottom-color: var(--hannah); }
   .tab.active-vs { color: var(--accent2); border-bottom-color: var(--accent2); }
@@ -82,54 +43,77 @@
 
   .container { max-width: 680px; margin: 0 auto; padding: 0 16px; }
 
-  .today-card {
+  /* MILESTONE BANNER */
+  .milestone-banner {
     margin: 20px 0 0;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
+    background: linear-gradient(135deg, rgba(74,222,128,0.15), rgba(34,211,238,0.15));
+    border: 1px solid rgba(74,222,128,0.4);
+    border-radius: 14px;
+    padding: 18px 20px;
+    text-align: center;
     position: relative;
     overflow: hidden;
   }
-  .today-card::before {
+  .milestone-banner::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--hagen), var(--accent2));
   }
+  .milestone-emoji { font-size: 32px; display: block; margin-bottom: 6px; }
+  .milestone-title { font-size: 18px; font-weight: 900; color: var(--hagen); letter-spacing: -0.5px; }
+  .milestone-sub { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .milestone-banner-hannah { background: linear-gradient(135deg, rgba(244,114,182,0.15), rgba(245,158,11,0.15)); border-color: rgba(244,114,182,0.4); }
+  .milestone-banner-hannah::before { background: linear-gradient(90deg, var(--hannah), var(--accent3)); }
+  .milestone-banner-hannah .milestone-title { color: var(--hannah); }
+
+  /* TODAY CARD */
+  .today-card { margin: 20px 0 0; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; position: relative; overflow: hidden; }
+  .today-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
   .hagen-card::before { background: linear-gradient(90deg, var(--hagen), var(--accent2)); }
   .hannah-card::before { background: linear-gradient(90deg, var(--hannah), var(--accent3)); }
-
   .today-label { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
   .today-mins { font-size: 56px; font-weight: 900; line-height: 1; letter-spacing: -2px; margin-bottom: 4px; }
   .today-mins .unit { font-size: 20px; font-weight: 400; color: var(--muted); letter-spacing: 0; }
   .today-goal { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-bottom: 20px; }
-
   .progress-track { height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
   .progress-fill { height: 100%; border-radius: 4px; transition: width 1s cubic-bezier(0.4,0,0.2,1); }
   .progress-labels { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 10px; color: var(--muted); }
-
-  .goal-met {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-family: var(--mono); font-size: 11px;
-    padding: 4px 10px; border-radius: 20px; margin-top: 12px;
-  }
+  .goal-met { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; padding: 4px 10px; border-radius: 20px; margin-top: 12px; }
   .goal-met-hagen { background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.3); color: var(--hagen); }
   .goal-met-hannah { background: rgba(244,114,182,0.1); border: 1px solid rgba(244,114,182,0.3); color: var(--hannah); }
 
+  /* STATS */
   .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 12px 0 0; }
   .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 14px; }
   .stat-label { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
   .stat-value { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; line-height: 1; }
   .stat-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 4px; }
 
-  .section-header {
-    font-family: var(--mono); font-size: 10px; color: var(--muted);
-    letter-spacing: 2px; text-transform: uppercase;
-    margin: 28px 0 12px;
-    display: flex; align-items: center; gap: 10px;
-  }
+  /* CONSISTENCY + RECORDS ROW */
+  .records-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0 0; }
+  .record-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 14px; }
+  .record-label { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+  .record-value { font-size: 19px; font-weight: 900; letter-spacing: -0.5px; line-height: 1; }
+  .record-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 4px; }
+
+  /* CONSISTENCY RING */
+  .consistency-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 14px; display: flex; align-items: center; gap: 14px; }
+  .consistency-ring { position: relative; width: 52px; height: 52px; flex-shrink: 0; }
+  .consistency-ring svg { transform: rotate(-90deg); }
+  .ring-bg { fill: none; stroke: var(--surface2); stroke-width: 4; }
+  .ring-fill { fill: none; stroke-width: 4; stroke-linecap: round; transition: stroke-dashoffset 1s cubic-bezier(0.4,0,0.2,1); }
+  .ring-text { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 12px; font-weight: 700; }
+  .consistency-info {}
+  .consistency-label { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; }
+  .consistency-value { font-size: 15px; font-weight: 700; }
+  .consistency-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  /* SECTION HEADER */
+  .section-header { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin: 28px 0 12px; display: flex; align-items: center; gap: 10px; }
   .section-header::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
+  /* WEEK BARS */
   .week-bars { display: grid; grid-template-columns: repeat(7,1fr); gap: 6px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
   .day-bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
   .day-bar-track { width: 100%; height: 80px; background: var(--surface2); border-radius: 4px; overflow: hidden; display: flex; align-items: flex-end; }
@@ -137,6 +121,7 @@
   .day-label { font-family: var(--mono); font-size: 9px; color: var(--muted); text-align: center; }
   .day-mins { font-family: var(--mono); font-size: 9px; color: var(--text); text-align: center; }
 
+  /* HEAT MAP */
   .heatmap-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px; overflow-x: auto; }
   .heatmap-months { display: flex; margin-bottom: 4px; }
   .month-label { font-family: var(--mono); font-size: 9px; color: var(--muted); flex-shrink: 0; }
@@ -148,6 +133,37 @@
   .legend-label { font-family: var(--mono); font-size: 9px; color: var(--muted); }
   .legend-cell { width: 11px; height: 11px; border-radius: 2px; }
 
+  /* MONTHLY CALENDAR */
+  .cal-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
+  .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .cal-title { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 1px; }
+  .cal-nav { display: flex; gap: 8px; }
+  .cal-btn { background: var(--surface2); border: 1px solid var(--border); color: var(--muted); font-family: var(--mono); font-size: 11px; padding: 4px 10px; border-radius: 5px; cursor: pointer; transition: all 0.15s; }
+  .cal-btn:hover { color: var(--text); border-color: var(--text); }
+  .cal-dow { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; margin-bottom: 6px; }
+  .cal-dow-label { font-family: var(--mono); font-size: 9px; color: var(--muted); text-align: center; }
+  .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
+  .cal-day {
+    aspect-ratio: 1; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 10px; font-weight: 500; cursor: default;
+    position: relative; transition: transform 0.1s;
+  }
+  .cal-day:hover { transform: scale(1.1); }
+  .cal-day.empty { background: transparent; color: transparent; }
+  .cal-day.no-data { background: var(--surface2); color: var(--muted); }
+  .cal-day.partial { color: var(--text); }
+  .cal-day.goal-hit { color: #0d0f14; font-weight: 700; }
+  .cal-day.today-marker { box-shadow: 0 0 0 2px var(--text); }
+  .cal-day.future { background: transparent; color: var(--border); }
+  .cal-legend { display: flex; align-items: center; gap: 12px; margin-top: 12px; justify-content: center; flex-wrap: wrap; }
+  .cal-legend-item { display: flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 9px; color: var(--muted); }
+  .cal-legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .cal-summary { display: flex; justify-content: space-around; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+  .cal-sum-item { text-align: center; }
+  .cal-sum-val { font-family: var(--mono); font-size: 16px; font-weight: 700; }
+  .cal-sum-label { font-family: var(--mono); font-size: 9px; color: var(--muted); margin-top: 2px; letter-spacing: 1px; }
+
+  /* BREAKDOWN */
   .breakdown-list { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
   .breakdown-row { display: flex; align-items: center; gap: 12px; padding: 13px 18px; border-bottom: 1px solid var(--border); }
   .breakdown-row:last-child { border-bottom: none; }
@@ -158,33 +174,34 @@
   .breakdown-mins { font-family: var(--mono); font-size: 11px; color: var(--muted); width: 52px; text-align: right; }
   .breakdown-pct { font-family: var(--mono); font-size: 11px; color: var(--muted); width: 32px; text-align: right; }
 
+  /* PERSONAL RECORDS */
+  .records-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .prec-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 14px; }
+  .prec-icon { font-size: 18px; margin-bottom: 6px; display: block; }
+  .prec-label { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .prec-value { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; line-height: 1; }
+  .prec-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 4px; }
+
   /* VS */
-  .vs-header {
-    display: grid; grid-template-columns: 1fr auto 1fr;
-    align-items: center; gap: 12px;
-    margin: 20px 0 0;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 16px; padding: 20px;
-  }
+  .vs-header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; margin: 20px 0 0; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
   .vs-player { text-align: center; }
   .vs-name { font-size: 13px; font-weight: 700; font-family: var(--mono); letter-spacing: 1px; margin-bottom: 6px; }
   .vs-big { font-size: 42px; font-weight: 900; letter-spacing: -1px; line-height: 1; }
   .vs-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 4px; }
   .vs-divider { font-size: 18px; color: var(--muted); font-family: var(--mono); text-align: center; }
-
   .vs-row { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-top: 10px; }
   .vs-stat-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--border); gap: 10px; }
   .vs-stat-row:last-child { border-bottom: none; }
   .vs-val-h { font-size: 16px; font-weight: 700; font-family: var(--mono); text-align: left; }
   .vs-val-ha { font-size: 16px; font-weight: 700; font-family: var(--mono); text-align: right; }
   .vs-stat-label { font-family: var(--mono); font-size: 9px; color: var(--muted); text-align: center; letter-spacing: 1px; text-transform: uppercase; }
-
   .vs-week-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px; margin-top: 10px; }
   .vs-week-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
   .vs-day-col { display: flex; flex-direction: column; align-items: center; gap: 3px; }
   .vs-day-cell { width: 100%; aspect-ratio: 1; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 8px; font-weight: 500; }
   .vs-day-label { font-family: var(--mono); font-size: 8px; color: var(--muted); text-align: center; }
 
+  /* LOADING */
   .loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; gap: 16px; }
   .loading-text { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: 2px; }
   .spinner { width: 32px; height: 32px; border: 2px solid var(--border); border-top-color: var(--hagen); border-radius: 50%; animation: spin 0.8s linear infinite; }
@@ -199,6 +216,8 @@
   .fade-in:nth-child(4){animation-delay:0.16s}
   .fade-in:nth-child(5){animation-delay:0.20s}
   .fade-in:nth-child(6){animation-delay:0.24s}
+  .fade-in:nth-child(7){animation-delay:0.28s}
+  .fade-in:nth-child(8){animation-delay:0.32s}
   @keyframes fadeIn { to { opacity: 1; } }
 </style>
 </head>
@@ -219,10 +238,7 @@
 </div>
 
 <div class="container" id="app">
-  <div class="loading">
-    <div class="spinner"></div>
-    <div class="loading-text">LOADING DATA...</div>
-  </div>
+  <div class="loading"><div class="spinner"></div><div class="loading-text">LOADING DATA...</div></div>
 </div>
 
 <div class="tooltip" id="tooltip"></div>
@@ -231,10 +247,17 @@
 const HAGEN_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQjqy00VBrYnNZozavX5B7QnSTJWFgIbCYICDGeU8ZqzVaPdi3zIpzcN1drMBDvf2yDeZJz13Ud38-H/pub?gid=1027126029&single=true&output=csv";
 const HANNAH_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTe6XAhe9h1xGk51SgcTFBBbUeN9JTX5l_8KQzbDSgE4H9YbOTNF3ZVJJ3TeQby1V9FdVBrVpNt7Xz2/pub?gid=378946601&single=true&output=csv";
 const DAILY_GOAL = 150;
-const TYPE_COLORS = ["#4ade80","#22d3ee","#f59e0b","#a78bfa","#f87171","#fb923c","#34d399"];
+const TYPE_COLORS = ["#4ade80","#22d3ee","#f59e0b","#a78bfa","#f87171","#fb923c","#34d399","#60a5fa"];
+const MILESTONES = [
+  { hours: 100, label: "100 Hours", emoji: "🎯", msg: "First 100 hours in the books!" },
+  { hours: 250, label: "250 Hours", emoji: "⚡", msg: "Quarter-thousand hours. Serious dedication." },
+  { hours: 500, label: "500 Hours", emoji: "🔥", msg: "500 hours. You're not the same learner you were." },
+  { hours: 1000, label: "1000 Hours", emoji: "👑", msg: "1000 hours. 達人の領域へ。" },
+];
 
 let currentTab = "hagen";
 let hagenData = {}, hannahData = {};
+let calViewYear, calViewMonth;
 
 function parseCSV(text) {
   const lines = text.trim().split("\n");
@@ -291,6 +314,19 @@ function calcStreak(data, today) {
   return streak;
 }
 
+function calcBestStreak(data) {
+  const dates = Object.keys(data).sort();
+  let best=0, cur=0, prev=null;
+  for (const d of dates) {
+    if (data[d].total >= DAILY_GOAL) {
+      if (prev && addDays(prev,1)===d) { cur++; } else { cur=1; }
+      best = Math.max(best,cur);
+      prev = d;
+    } else { cur=0; prev=d; }
+  }
+  return best;
+}
+
 function calcTotals(data, today) {
   let total=0, week=0, month=0;
   const w=addDays(today,-6), m=today.substring(0,7)+"-01";
@@ -300,6 +336,47 @@ function calcTotals(data, today) {
     if(d>=m&&d<=today) month+=v.total;
   });
   return {total,week,month};
+}
+
+function calcConsistency(data, today) {
+  let logged=0;
+  for (let i=0; i<30; i++) {
+    const d = addDays(today,-i);
+    if (data[d] && data[d].total > 0) logged++;
+  }
+  return Math.round((logged/30)*100);
+}
+
+function calcPersonalRecords(data) {
+  let bestDay=0, bestDayDate='', bestWeek=0, bestSession=0;
+  const dates = Object.keys(data).sort();
+  for (const d of dates) {
+    if (data[d].total > bestDay) { bestDay=data[d].total; bestDayDate=d; }
+  }
+  // Best week (rolling 7)
+  for (const d of dates) {
+    let weekTotal=0;
+    for (let i=0;i<7;i++) { const wd=addDays(d,i); if(data[wd]) weekTotal+=data[wd].total; }
+    bestWeek = Math.max(bestWeek, weekTotal);
+  }
+  return { bestDay, bestDayDate, bestWeek };
+}
+
+function getMilestone(totalMins) {
+  const hrs = totalMins / 60;
+  let current = null;
+  for (const m of MILESTONES) {
+    if (hrs >= m.hours) current = m;
+  }
+  // Check if just hit one (within last 7 days worth of mins)
+  const prev = totalMins - (DAILY_GOAL * 7);
+  for (const m of MILESTONES) {
+    const mMins = m.hours * 60;
+    if (totalMins >= mMins && prev < mMins) return { milestone: m, justHit: true };
+  }
+  // Next milestone
+  const next = MILESTONES.find(m => hrs < m.hours);
+  return { milestone: current, next, justHit: false };
 }
 
 function setTab(tab) {
@@ -323,12 +400,48 @@ function renderPlayer(data, name, who) {
   const remaining = Math.max(DAILY_GOAL-todayMins,0);
   const goalMet = todayMins>=DAILY_GOAL;
   const streak = calcStreak(data,today);
-  const {total,week} = calcTotals(data,today);
+  const bestStreak = calcBestStreak(data);
+  const {total,week,month} = calcTotals(data,today);
+  const consistency = calcConsistency(data,today);
+  const records = calcPersonalRecords(data);
+  const { milestone, next, justHit } = getMilestone(total);
   const color = who==="hagen"?"var(--hagen)":"var(--hannah)";
   const gradEnd = who==="hagen"?"var(--accent2)":"var(--accent3)";
   const gmClass = who==="hagen"?"goal-met-hagen":"goal-met-hannah";
+  const bannerClass = who==="hannah"?"milestone-banner milestone-banner-hannah":"milestone-banner";
+
+  // Milestone banner
+  let milestoneBanner = '';
+  if (justHit && milestone) {
+    milestoneBanner = `<div class="${bannerClass} fade-in">
+      <span class="milestone-emoji">${milestone.emoji}</span>
+      <div class="milestone-title">${milestone.label} Milestone!</div>
+      <div class="milestone-sub">${milestone.msg}</div>
+    </div>`;
+  } else if (next) {
+    const toNext = Math.round(next.hours - total/60);
+    milestoneBanner = `<div class="milestone-banner fade-in" style="background:var(--surface);border-color:var(--border)">
+      <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px">Next Milestone</div>
+      <div style="font-size:15px;font-weight:700;color:${color}">${next.emoji} ${next.label}</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:4px">${toNext} hours to go</div>
+      <div class="progress-track" style="margin-top:10px;margin-bottom:0">
+        <div class="progress-fill" style="width:${Math.round((total/60/next.hours)*100)}%;background:${color}"></div>
+      </div>
+    </div>`;
+  }
+
+  // Consistency ring circumference
+  const r = 22;
+  const circ = 2 * Math.PI * r;
+  const offset = circ - (consistency/100)*circ;
+  const consistencyColor = consistency>=80?color:consistency>=50?"var(--accent3)":"var(--red)";
+
+  // Today's JST for calendar default
+  const jst = new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Tokyo"}));
+  if (calViewYear === undefined) { calViewYear = jst.getFullYear(); calViewMonth = jst.getMonth(); }
 
   document.getElementById("app").innerHTML = `
+    ${milestoneBanner}
     <div class="today-card ${who}-card fade-in">
       <div class="today-label">TODAY · ${today}</div>
       <div class="today-mins" style="color:${goalMet?color:'var(--text)'}">
@@ -341,6 +454,7 @@ function renderPlayer(data, name, who) {
       <div class="progress-labels"><span>0</span><span>75</span><span>150 min</span></div>
       ${goalMet?`<div class="goal-met ${gmClass}">✦ Goal complete</div>`:''}
     </div>
+
     <div class="stats-row fade-in">
       <div class="stat-card">
         <div class="stat-label">Streak</div>
@@ -348,9 +462,9 @@ function renderPlayer(data, name, who) {
         <div class="stat-sub">${streak===1?'day':'days'} 🔥</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">This Week</div>
-        <div class="stat-value" style="color:var(--accent2)">${(week/60).toFixed(1)}</div>
-        <div class="stat-sub">hours</div>
+        <div class="stat-label">Best Streak</div>
+        <div class="stat-value" style="color:var(--accent3)">${bestStreak}</div>
+        <div class="stat-sub">${bestStreak===1?'day':'days'} 🏆</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">All Time</div>
@@ -358,13 +472,184 @@ function renderPlayer(data, name, who) {
         <div class="stat-sub">hours</div>
       </div>
     </div>
+
+    <div class="stats-row fade-in" style="margin-top:10px">
+      <div class="stat-card">
+        <div class="stat-label">This Week</div>
+        <div class="stat-value" style="color:var(--accent2)">${(week/60).toFixed(1)}</div>
+        <div class="stat-sub">hours</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">This Month</div>
+        <div class="stat-value" style="color:var(--accent2)">${(month/60).toFixed(1)}</div>
+        <div class="stat-sub">hours</div>
+      </div>
+      <div class="consistency-card">
+        <div class="consistency-ring">
+          <svg width="52" height="52" viewBox="0 0 52 52">
+            <circle class="ring-bg" cx="26" cy="26" r="${r}"/>
+            <circle class="ring-fill" cx="26" cy="26" r="${r}"
+              stroke="${consistencyColor}"
+              stroke-dasharray="${circ}"
+              stroke-dashoffset="${offset}"/>
+          </svg>
+          <div class="ring-text" style="color:${consistencyColor}">${consistency}%</div>
+        </div>
+        <div class="consistency-info">
+          <div class="consistency-label">30-Day</div>
+          <div class="consistency-value" style="color:${consistencyColor}">Consistency</div>
+          <div class="consistency-sub">days logged</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-header fade-in">Personal Records 🏆</div>
+    <div class="records-grid fade-in">
+      <div class="prec-card">
+        <span class="prec-icon">📅</span>
+        <div class="prec-label">Best Day</div>
+        <div class="prec-value" style="color:${color}">${records.bestDay}m</div>
+        <div class="prec-sub">${records.bestDayDate||'—'}</div>
+      </div>
+      <div class="prec-card">
+        <span class="prec-icon">📆</span>
+        <div class="prec-label">Best Week</div>
+        <div class="prec-value" style="color:${color}">${(records.bestWeek/60).toFixed(1)}h</div>
+        <div class="prec-sub">${records.bestWeek} min total</div>
+      </div>
+      <div class="prec-card">
+        <span class="prec-icon">🔥</span>
+        <div class="prec-label">Best Streak</div>
+        <div class="prec-value" style="color:var(--accent3)">${bestStreak}</div>
+        <div class="prec-sub">${bestStreak===1?'day':'days'} in a row</div>
+      </div>
+      <div class="prec-card">
+        <span class="prec-icon">⏱</span>
+        <div class="prec-label">All Time</div>
+        <div class="prec-value" style="color:${color}">${(total/60).toFixed(0)}h</div>
+        <div class="prec-sub">${Math.round(total)} minutes</div>
+      </div>
+    </div>
+
     <div class="section-header fade-in">Last 7 Days</div>
     ${renderWeekBars(data,today,color)}
+
+    <div class="section-header fade-in">Monthly Calendar</div>
+    ${renderMonthCalendar(data, who, color)}
+
     <div class="section-header fade-in">12-Week Heat Map</div>
     ${renderHeatMap(data,today,who)}
+
     <div class="section-header fade-in">By Input Type</div>
     ${renderBreakdown(data)}
   `;
+}
+
+function renderMonthCalendar(data, who, color) {
+  const today = getTodayJST();
+  const jst = new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Tokyo"}));
+  const year = calViewYear;
+  const month = calViewMonth;
+  const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const firstDay = new Date(year, month, 1).getDay();
+
+  // Month stats
+  const monthStart = `${year}-${String(month+1).padStart(2,"0")}-01`;
+  const monthEnd = `${year}-${String(month+1).padStart(2,"0")}-${String(daysInMonth).padStart(2,"0")}`;
+  let monthTotal=0, goalDays=0, loggedDays=0;
+  for (let d=1; d<=daysInMonth; d++) {
+    const ds = `${year}-${String(month+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+    if (data[ds]) {
+      monthTotal += data[ds].total;
+      loggedDays++;
+      if (data[ds].total >= DAILY_GOAL) goalDays++;
+    }
+  }
+
+  const c1 = who==="hagen"?"#14532d":"#831843";
+  const c2 = who==="hagen"?"#16a34a":"#be185d";
+  const c3 = who==="hagen"?"#4ade80":"#f472b6";
+
+  let cells = '';
+  // Empty cells before first day
+  for (let i=0; i<firstDay; i++) cells += `<div class="cal-day empty"></div>`;
+
+  for (let d=1; d<=daysInMonth; d++) {
+    const ds = `${year}-${String(month+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+    const mins = data[ds] ? data[ds].total : 0;
+    const isToday = ds === today;
+    const isFuture = ds > today;
+    let cls = 'cal-day';
+    let bg = 'var(--surface2)';
+    let textColor = 'var(--muted)';
+
+    if (isFuture) {
+      cls += ' future';
+      bg = 'transparent';
+      textColor = 'var(--border)';
+    } else if (mins >= DAILY_GOAL) {
+      cls += ' goal-hit';
+      bg = c3;
+      textColor = '#0d0f14';
+    } else if (mins > 0) {
+      cls += ' partial';
+      bg = c2;
+      textColor = '#e8eaf0';
+    } else {
+      cls += ' no-data';
+    }
+    if (isToday) cls += ' today-marker';
+
+    cells += `<div class="${cls}" style="background:${bg};color:${textColor}" title="${ds}: ${mins}min">${d}</div>`;
+  }
+
+  const canGoPrev = !(year === 2026 && month === 2); // don't go before March 2026 (tracker start)
+  const jstNow = new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Tokyo"}));
+  const canGoNext = !(year === jstNow.getFullYear() && month === jstNow.getMonth());
+
+  return `<div class="cal-wrap fade-in">
+    <div class="cal-header">
+      <div class="cal-title">${monthNames[month]} ${year}</div>
+      <div class="cal-nav">
+        <button class="cal-btn" onclick="calNav(-1,'${who}')" ${!canGoPrev?'disabled style="opacity:0.3"':''}>‹</button>
+        <button class="cal-btn" onclick="calNav(1,'${who}')" ${!canGoNext?'disabled style="opacity:0.3"':''}>›</button>
+      </div>
+    </div>
+    <div class="cal-dow">
+      ${["S","M","T","W","T","F","S"].map(d=>`<div class="cal-dow-label">${d}</div>`).join("")}
+    </div>
+    <div class="cal-grid">${cells}</div>
+    <div class="cal-summary">
+      <div class="cal-sum-item">
+        <div class="cal-sum-val" style="color:${color}">${goalDays}</div>
+        <div class="cal-sum-label">GOALS HIT</div>
+      </div>
+      <div class="cal-sum-item">
+        <div class="cal-sum-val" style="color:var(--accent2)">${loggedDays}</div>
+        <div class="cal-sum-label">DAYS LOGGED</div>
+      </div>
+      <div class="cal-sum-item">
+        <div class="cal-sum-val" style="color:var(--muted)">${(monthTotal/60).toFixed(1)}h</div>
+        <div class="cal-sum-label">TOTAL</div>
+      </div>
+    </div>
+    <div class="cal-legend">
+      <div class="cal-legend-item"><div class="cal-legend-dot" style="background:${c3}"></div>Goal hit</div>
+      <div class="cal-legend-item"><div class="cal-legend-dot" style="background:${c2}"></div>Partial</div>
+      <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--surface2)"></div>No log</div>
+    </div>
+  </div>`;
+}
+
+function calNav(dir, who) {
+  calViewMonth += dir;
+  if (calViewMonth > 11) { calViewMonth = 0; calViewYear++; }
+  if (calViewMonth < 0) { calViewMonth = 11; calViewYear--; }
+  const data = who==="hagen" ? hagenData : hannahData;
+  const color = who==="hagen" ? "var(--hagen)" : "var(--hannah)";
+  // Re-render just the calendar section
+  renderCurrent();
 }
 
 function renderVS() {
@@ -375,38 +660,31 @@ function renderVS() {
   const haStreak = calcStreak(hannahData,today);
   const hT = calcTotals(hagenData,today);
   const haT = calcTotals(hannahData,today);
+  const hCon = calcConsistency(hagenData,today);
+  const haCon = calcConsistency(hannahData,today);
 
-  function wc(a,b) { return a>b?"hagen":b>a?"hannah":"tie"; }
-  function hl(winner,side) {
-    const c = side==="hagen"?"var(--hagen)":"var(--hannah)";
-    return winner===side ? c : "var(--muted)";
-  }
-  function crown(winner,side) {
-    if(winner===side) return side==="hagen"?' <span style="color:var(--hagen)">👑</span>':' <span style="color:var(--hannah)">👑</span>';
-    return '';
-  }
+  function wc(a,b){return a>b?"hagen":b>a?"hannah":"tie";}
+  function hl(winner,side){const c=side==="hagen"?"var(--hagen)":"var(--hannah)";return winner===side?c:"var(--muted)";}
+  function crown(winner,side){if(winner===side)return side==="hagen"?' <span style="color:var(--hagen)">👑</span>':' <span style="color:var(--hannah)">👑</span>';return '';}
 
-  const days = [];
+  const days=[];
   for(let i=6;i>=0;i--) days.push(addDays(today,-i));
-
-  const vsWeek = days.map(d=>{
+  const vsWeek=days.map(d=>{
     const hm=hagenData[d]?hagenData[d].total:0;
     const ham=hannahData[d]?hannahData[d].total:0;
-    const date=new Date(d+"T00:00:00");
-    const lbl=["S","M","T","W","T","F","S"][date.getDay()];
+    const lbl=["S","M","T","W","T","F","S"][new Date(d+"T00:00:00").getDay()];
     const hBg=hm>=DAILY_GOAL?"rgba(74,222,128,0.3)":hm>0?"rgba(74,222,128,0.12)":"var(--surface2)";
     const haBg=ham>=DAILY_GOAL?"rgba(244,114,182,0.3)":ham>0?"rgba(244,114,182,0.12)":"var(--surface2)";
-    return `
-      <div class="vs-day-col">
-        <div class="vs-day-cell" style="background:${hBg};color:${hm>0?'var(--hagen)':'var(--muted)'}">${hm>0?hm:'—'}</div>
-        <div class="vs-day-label">${lbl}</div>
-        <div class="vs-day-cell" style="background:${haBg};color:${ham>0?'var(--hannah)':'var(--muted)'}">${ham>0?ham:'—'}</div>
-      </div>`;
+    return `<div class="vs-day-col">
+      <div class="vs-day-cell" style="background:${hBg};color:${hm>0?'var(--hagen)':'var(--muted)'}">${hm>0?hm:'—'}</div>
+      <div class="vs-day-label">${lbl}</div>
+      <div class="vs-day-cell" style="background:${haBg};color:${ham>0?'var(--hannah)':'var(--muted)'}">${ham>0?ham:'—'}</div>
+    </div>`;
   }).join("");
 
-  const tw=wc(hToday,haToday), sw=wc(hStreak,haStreak), ww=wc(hT.week,haT.week), aw=wc(hT.total,haT.total);
+  const sw=wc(hStreak,haStreak),ww=wc(hT.week,haT.week),aw=wc(hT.total,haT.total),cw=wc(hCon,haCon);
 
-  document.getElementById("app").innerHTML = `
+  document.getElementById("app").innerHTML=`
     <div class="vs-header fade-in">
       <div class="vs-player">
         <div class="vs-name" style="color:var(--hagen)">HAGEN</div>
@@ -438,6 +716,11 @@ function renderVS() {
         <div class="vs-stat-label">All Time</div>
         <div class="vs-val-ha" style="color:${hl(aw,'hannah')}">${crown(aw,'hannah')}${(haT.total/60).toFixed(1)}h</div>
       </div>
+      <div class="vs-stat-row">
+        <div class="vs-val-h" style="color:${hl(cw,'hagen')}">${hCon}%${crown(cw,'hagen')}</div>
+        <div class="vs-stat-label">Consistency</div>
+        <div class="vs-val-ha" style="color:${hl(cw,'hannah')}">${crown(cw,'hannah')}${haCon}%</div>
+      </div>
     </div>
     <div class="section-header fade-in">Last 7 Days</div>
     <div class="vs-week-wrap fade-in">
@@ -446,15 +729,14 @@ function renderVS() {
         <span style="font-family:var(--mono);font-size:10px;color:var(--hannah)">HANNAH ▲</span>
       </div>
       <div class="vs-week-grid">${vsWeek}</div>
-    </div>
-  `;
+    </div>`;
 }
 
 function renderWeekBars(data, today, color) {
-  const days = [];
+  const days=[];
   for(let i=6;i>=0;i--) days.push(addDays(today,-i));
-  const maxMins = Math.max(...days.map(d=>data[d]?data[d].total:0),DAILY_GOAL);
-  const bars = days.map(d=>{
+  const maxMins=Math.max(...days.map(d=>data[d]?data[d].total:0),DAILY_GOAL);
+  const bars=days.map(d=>{
     const mins=data[d]?data[d].total:0;
     const h=maxMins>0?Math.round((mins/maxMins)*100):0;
     const lbl=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][new Date(d+"T00:00:00").getDay()];
@@ -484,8 +766,7 @@ function renderHeatMap(data, today, who) {
     if(mo!==lastMonth){monthLabels.push({col:colIdx,label:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][mo]});lastMonth=mo;}
     const cells=[];
     for(let dow=0;dow<7;dow++){
-      const cd=new Date(current);
-      cd.setDate(cd.getDate()+dow);
+      const cd=new Date(current);cd.setDate(cd.getDate()+dow);
       const ds=`${cd.getFullYear()}-${String(cd.getMonth()+1).padStart(2,"0")}-${String(cd.getDate()).padStart(2,"0")}`;
       const mins=data[ds]?data[ds].total:0;
       const fut=ds>today;
@@ -495,8 +776,7 @@ function renderHeatMap(data, today, who) {
       cells.push(`<div class="heat-cell"${op} style="background:${bg}" data-date="${ds}" data-mins="${mins}"></div>`);
     }
     cols.push(`<div class="heatmap-col">${cells.join("")}</div>`);
-    current.setDate(current.getDate()+7);
-    colIdx++;
+    current.setDate(current.getDate()+7);colIdx++;
   }
   const CELL=16;
   let mHTML='';
@@ -550,19 +830,21 @@ document.addEventListener("mousemove",e=>{
   } else { tip.style.display="none"; }
 });
 
-async function fetchCSV(url) {
+async function fetchCSV(url){
   const res=await fetch(url+"&t="+Date.now());
   if(!res.ok) throw new Error("Failed to fetch");
   return buildData(parseCSV(await res.text()));
 }
 
-async function loadAll() {
+async function loadAll(){
   document.getElementById("app").innerHTML=`<div class="loading"><div class="spinner"></div><div class="loading-text">LOADING DATA...</div></div>`;
-  try {
+  try{
     const [h,ha]=await Promise.all([fetchCSV(HAGEN_URL),fetchCSV(HANNAH_URL)]);
     hagenData=h; hannahData=ha;
+    const jst=new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Tokyo"}));
+    calViewYear=jst.getFullYear(); calViewMonth=jst.getMonth();
     renderCurrent();
-  } catch(err) {
+  } catch(err){
     document.getElementById("app").innerHTML=`<div style="background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);color:var(--red);font-family:var(--mono);font-size:12px;padding:16px;border-radius:10px;margin:20px 0;text-align:center">Could not load data.<br><small>${err.message}</small></div>`;
   }
 }
