@@ -174,6 +174,23 @@
   .breakdown-mins { font-family: var(--mono); font-size: 11px; color: var(--muted); width: 52px; text-align: right; }
   .breakdown-pct { font-family: var(--mono); font-size: 11px; color: var(--muted); width: 32px; text-align: right; }
 
+  /* WEEKLY TARGETS */
+  .weekly-targets { display: flex; flex-direction: column; gap: 10px; }
+  .target-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
+  .target-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .target-name { font-size: 14px; font-weight: 700; }
+  .target-nums { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .target-track { height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; margin-bottom: 10px; }
+  .target-fill { height: 100%; border-radius: 4px; transition: width 1s cubic-bezier(0.4,0,0.2,1); }
+  .target-meta { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 10px; color: var(--muted); margin-bottom: 14px; }
+  .target-history { display: flex; gap: 6px; }
+  .target-history-label { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+  .hist-week { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .hist-bar-track { width: 100%; height: 40px; background: var(--surface2); border-radius: 3px; overflow: hidden; display: flex; align-items: flex-end; }
+  .hist-bar-fill { width: 100%; border-radius: 3px; transition: height 0.8s cubic-bezier(0.4,0,0.2,1); }
+  .hist-label { font-family: var(--mono); font-size: 8px; color: var(--muted); text-align: center; }
+  .hist-mins { font-family: var(--mono); font-size: 8px; color: var(--text); text-align: center; }
+
   /* PERSONAL RECORDS */
   .records-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .prec-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 14px; }
@@ -540,6 +557,9 @@ function renderPlayer(data, name, who) {
     <div class="section-header fade-in">12-Week Heat Map</div>
     ${renderHeatMap(data,today,who)}
 
+    <div class="section-header fade-in">Weekly Targets</div>
+    ${renderWeeklyTargets(data, today, color)}
+
     <div class="section-header fade-in">By Input Type</div>
     ${renderBreakdown(data)}
   `;
@@ -796,6 +816,82 @@ function renderHeatMap(data, today, who) {
       <span class="legend-label">More</span>
     </div>
   </div>`;
+}
+
+function renderWeeklyTargets(data, today, color) {
+  const TARGETS = [
+    { type: "Shadowing", goal: 240, label: "Shadowing" },
+    { type: "Reading / Manga", goal: 240, label: "Reading / Manga" },
+  ];
+
+  // Get start of current week (Monday)
+  function getWeekStart(dateStr, weeksAgo) {
+    const d = new Date(dateStr + "T00:00:00");
+    const day = d.getDay();
+    const diff = (day === 0 ? 6 : day - 1); // Monday = 0
+    d.setDate(d.getDate() - diff - (weeksAgo * 7));
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  }
+
+  function getWeekMins(data, type, weekStartStr) {
+    let total = 0;
+    for (let i = 0; i < 7; i++) {
+      const d = addDays(weekStartStr, i);
+      if (data[d] && data[d].byType[type]) total += data[d].byType[type];
+    }
+    return total;
+  }
+
+  const cards = TARGETS.map(({ type, goal, label }) => {
+    const thisWeekStart = getWeekStart(today, 0);
+    const thisMins = getWeekMins(data, type, thisWeekStart);
+    const pct = Math.min(Math.round((thisMins / goal) * 100), 100);
+    const remaining = Math.max(goal - thisMins, 0);
+    const goalMet = thisMins >= goal;
+    const fillColor = goalMet ? color : thisMins >= goal * 0.5 ? "var(--accent3)" : "var(--red)";
+
+    // Last 4 weeks history
+    const histWeeks = [];
+    for (let w = 3; w >= 0; w--) {
+      const ws = getWeekStart(today, w);
+      const mins = getWeekMins(data, type, ws);
+      const weekDate = new Date(ws + "T00:00:00");
+      const mo = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][weekDate.getMonth()];
+      const label2 = w === 0 ? "This" : `${mo} ${weekDate.getDate()}`;
+      histWeeks.push({ mins, label: label2, pct: Math.min(Math.round((mins/goal)*100), 100), met: mins >= goal });
+    }
+
+    const histBars = histWeeks.map(w => {
+      const barColor = w.met ? color : w.mins > 0 ? "var(--accent3)" : "var(--surface2)";
+      return `<div class="hist-week">
+        <div class="hist-bar-track">
+          <div class="hist-bar-fill" style="height:${w.pct}%;background:${barColor}"></div>
+        </div>
+        <div class="hist-label">${w.label}</div>
+        <div class="hist-mins">${w.mins > 0 ? Math.round(w.mins/60*10)/10+'h' : '—'}</div>
+      </div>`;
+    }).join("");
+
+    return `<div class="target-card">
+      <div class="target-header">
+        <div class="target-name">${label}</div>
+        <div class="target-nums" style="color:${goalMet?color:'var(--muted)'}">
+          ${Math.round(thisMins/60*10)/10}h / ${goal/60}h ${goalMet ? '✦' : ''}
+        </div>
+      </div>
+      <div class="target-track">
+        <div class="target-fill" style="width:${pct}%;background:${fillColor}"></div>
+      </div>
+      <div class="target-meta">
+        <span>${pct}% of weekly goal</span>
+        <span>${goalMet ? '✅ Goal complete!' : remaining + ' min to go'}</span>
+      </div>
+      <div class="target-history-label">Last 4 Weeks</div>
+      <div class="target-history">${histBars}</div>
+    </div>`;
+  }).join("");
+
+  return `<div class="weekly-targets fade-in">${cards}</div>`;
 }
 
 function renderBreakdown(data) {
